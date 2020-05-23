@@ -2,6 +2,7 @@ package com.karam.connectfour;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -15,6 +16,9 @@ public class Controller implements Initializable {
 
 	@FXML
 	public Pane insertedDiscPane;
+
+	@FXML
+	public Label playerNameLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

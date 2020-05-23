@@ -2,25 +2,32 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <GridPane fx:id="rootGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D9F7F0;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.karam.connectfour.Controller">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="385.0" minWidth="10.0" prefWidth="385.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="215.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="387.0" minHeight="10.0" prefHeight="381.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" />
       <Pane fx:id="insertedDiscPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #2B3B4C;" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Region prefHeight="200.0" prefWidth="200.0" />
-            <Label text="Label" />
-            <Label text="Label" />
-            <Region prefHeight="200.0" prefWidth="200.0" />
+            <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Label fx:id="playerNameLabel" alignment="CENTER" prefHeight="43.0" prefWidth="312.0" text="Player One" textFill="#f8f7f7">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="38.0" prefWidth="301.0" text="Turn" textFill="WHITE">
+               <font>
+                  <Font size="26.0" />
+               </font></Label>
+            <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
          </children></VBox>
     </children>
 </GridPane>
