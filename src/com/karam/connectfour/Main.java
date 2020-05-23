@@ -38,17 +38,27 @@ public class Main extends Application {
 
 	private MenuBar createMenu(){
     	//File menu
-		Menu filemenu=new Menu("File");
+		Menu fileMenu=new Menu("File");
 
 		MenuItem newGame=new MenuItem("New game");
 		MenuItem resetGame=new MenuItem("Reset game");
 		SeparatorMenuItem separatorMenuItem=new SeparatorMenuItem();
 		MenuItem exitGame=new MenuItem("Exit game");
 
-		filemenu.getItems().addAll(newGame,resetGame,separatorMenuItem,exitGame);
+		fileMenu.getItems().addAll(newGame,resetGame,separatorMenuItem,exitGame);
+
+		//Help Menu
+		Menu helpMenu=new Menu("Help");
+
+		MenuItem aboutGame=new MenuItem("About Connect 4");
+		SeparatorMenuItem separatorHelpItem=new SeparatorMenuItem();
+		MenuItem aboutMe=new MenuItem("About Me");
+
+		helpMenu.getItems().addAll(aboutGame,separatorHelpItem,aboutMe);
+
 
 		MenuBar menuBar=new MenuBar();
-		menuBar.getMenus().addAll(filemenu);
+		menuBar.getMenus().addAll(fileMenu,helpMenu);
 		return menuBar;
 
 	}
