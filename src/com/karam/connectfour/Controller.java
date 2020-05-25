@@ -1,5 +1,6 @@
 package com.karam.connectfour;
 
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -9,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -93,11 +95,27 @@ public class Controller implements Initializable {
 	}
 	private void insertDisc(Disc disc,int column){
 
-		insertedDiscsArray[0][column]=disc;//For Structural changes for developers
+		int row=ROWS-1;
+		while (row>0){
+
+			if (insertedDiscsArray[row][column]==null)
+				break;
+			row--;
+		}
+		if (row<0)  //If it is full,we cannot insert anymore disc
+			return;
+
+		insertedDiscsArray[row][column]=disc;  //For Structural changes for developers
 		insertedDiscPane.getChildren().add(disc);
 		disc.setTranslateX(column*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 
-
+		TranslateTransition translateTransition=new TranslateTransition(Duration.seconds(0.4),disc);
+		translateTransition.setToY(row*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
+		translateTransition.setOnFinished(event -> {
+			isPlayerOneTurn =! isPlayerOneTurn;
+			playerNameLabel.setText(isPlayerOneTurn? PLAYER_ONE : PLAYER_TWO);
+		});
+		translateTransition.play();
 	}
 
 	private static class Disc extends Circle{
