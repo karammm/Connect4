@@ -27,7 +27,8 @@ public class Controller implements Initializable {
 	private static String PLAYER_TWO="Player Two";
 
 	private boolean isPlayerOneTurn=true;
-
+	
+	private Disc[][] insertedDiscsArray=new Disc[ROWS][COLUMNS];//For structural changes
 
 	@FXML
 	public GridPane rootGridPane;
@@ -90,7 +91,12 @@ public class Controller implements Initializable {
 
 		return rectangleList;
 	}
-	private static void insertDisc(Disc disc,int column){
+	private void insertDisc(Disc disc,int column){
+
+		insertedDiscsArray[0][column]=disc;//For Structural changes for developers
+		insertedDiscPane.getChildren().add(disc);
+		disc.setTranslateX(column*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
+
 
 	}
 
