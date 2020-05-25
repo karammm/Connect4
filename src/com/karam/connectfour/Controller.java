@@ -112,6 +112,8 @@ public class Controller implements Initializable {
 		TranslateTransition translateTransition=new TranslateTransition(Duration.seconds(0.4),disc);
 		translateTransition.setToY(row*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 		translateTransition.setOnFinished(event -> {
+
+
 			isPlayerOneTurn =! isPlayerOneTurn;
 			playerNameLabel.setText(isPlayerOneTurn? PLAYER_ONE : PLAYER_TWO);
 		});
