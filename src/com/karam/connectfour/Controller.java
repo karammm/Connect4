@@ -3,6 +3,7 @@ package com.karam.connectfour;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -16,6 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Controller implements Initializable {
 
@@ -109,15 +112,42 @@ public class Controller implements Initializable {
 		insertedDiscPane.getChildren().add(disc);
 		disc.setTranslateX(column*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 
+		int currRow=row;
 		TranslateTransition translateTransition=new TranslateTransition(Duration.seconds(0.4),disc);
 		translateTransition.setToY(row*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 		translateTransition.setOnFinished(event -> {
 
+			if(gameEnded(currRow,column)){
+
+				gameOver();
+			}
 
 			isPlayerOneTurn =! isPlayerOneTurn;
 			playerNameLabel.setText(isPlayerOneTurn? PLAYER_ONE : PLAYER_TWO);
 		});
 		translateTransition.play();
+	}
+
+	private boolean gameEnded(int row, int column){
+
+		//Vertical Points
+		//A small example: player has inserted his last disc at row=2 , column=3
+
+		//index of each element present in column [row][column]:
+		//notice same column of 3.
+
+		List<Point2D> verticalPointes=IntStream.rangeClosed(row-3,row+3)  //range of row values= 0,1,2,3,4,5
+										.mapToObj(r-> new Point2D(r,column))  //0,3  1,3  2,3   3,3  4,3  5,3 ==> Point2D  x,y
+										.collect(Collectors.toList());
+
+		List<Point2D> horizontalPoints=IntStream.rangeClosed(column-3,column+3)
+				.mapToObj(col-> new Point2D(row,col))
+				.collect(Collectors.toList());
+		return false;
+	}
+
+	private void gameOver(){
+
 	}
 
 	private static class Disc extends Circle{
