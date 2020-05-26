@@ -1,9 +1,12 @@
 package com.karam.connectfour;
 
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -16,6 +19,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -120,6 +124,7 @@ public class Controller implements Initializable {
 			if(gameEnded(currRow,column)){
 
 				gameOver();
+				return;//no further check if one player wins the game
 			}
 
 			isPlayerOneTurn =! isPlayerOneTurn;
@@ -198,6 +203,40 @@ public class Controller implements Initializable {
 		String winner = isPlayerOneTurn ? PLAYER_ONE : PLAYER_TWO;
 		System.out.println("Winner is: " + winner);
 
+		Alert alert=new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Connect Four");
+		alert.setHeaderText("The Winner is "+winner);
+		alert.setContentText("Want to play again?");
+		ButtonType yeBtn=new ButtonType("Yes");
+		ButtonType noBtn =new ButtonType("No, Exit");
+		alert.getButtonTypes().setAll(yeBtn,noBtn);
+
+		//After animation ends
+		Platform.runLater(()->{
+			Optional<ButtonType> btnClicked= alert.showAndWait();
+
+			if (btnClicked.isPresent() && btnClicked.get() ==yeBtn){
+				resetGame();
+			}else{
+				Platform.exit();
+				System.exit(0);
+			}
+		});
+
+	}
+
+	private void resetGame() {
+		insertedDiscPane.getChildren().clear(); //Remove all Inserted disc from pane
+		//Now these loops will structurally make all elements of insertedDiscArray back to null
+		for (int row = 0; row <insertedDiscsArray.length ; row++) {
+			for (int column = 0; column < insertedDiscsArray[row].length; column++) {
+				insertedDiscsArray[row][column] = null;
+			}
+		}
+		isPlayerOneTurn=true;//let player one start the game
+		playerNameLabel.setText(PLAYER_ONE);
+
+		createPlayground();
 	}
 
 	private static class Disc extends Circle{
