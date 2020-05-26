@@ -69,6 +69,7 @@ public class Controller implements Initializable {
 				circle.setRadius(CIRCLE_DIAMETER/2);
 				circle.setCenterX(CIRCLE_DIAMETER/2);
 				circle.setCenterY(CIRCLE_DIAMETER/2);
+				circle.setSmooth(true);
 				circle.setTranslateX(col*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 				circle.setTranslateY(row*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 				rectangleWithHoles=Shape.subtract(rectangleWithHoles,circle);
@@ -211,7 +212,7 @@ public class Controller implements Initializable {
 		ButtonType noBtn =new ButtonType("No, Exit");
 		alert.getButtonTypes().setAll(yeBtn,noBtn);
 
-		//After animation ends
+		//After animation ends  //Resolve illegal state exception
 		Platform.runLater(()->{
 			Optional<ButtonType> btnClicked= alert.showAndWait();
 
@@ -225,7 +226,7 @@ public class Controller implements Initializable {
 
 	}
 
-	private void resetGame() {
+	public void resetGame() {
 		insertedDiscPane.getChildren().clear(); //Remove all Inserted disc from pane
 		//Now these loops will structurally make all elements of insertedDiscArray back to null
 		for (int row = 0; row <insertedDiscsArray.length ; row++) {
@@ -236,7 +237,7 @@ public class Controller implements Initializable {
 		isPlayerOneTurn=true;//let player one start the game
 		playerNameLabel.setText(PLAYER_ONE);
 
-		createPlayground();
+		createPlayground();//prepare a fresh playground
 	}
 
 	private static class Disc extends Circle{

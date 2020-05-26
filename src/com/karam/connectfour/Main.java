@@ -43,11 +43,11 @@ public class Main extends Application {
 
 		MenuItem newGame = new MenuItem("New game");
 
-		newGame.setOnAction(event -> resetGame());  //Action on new Game
+		newGame.setOnAction(event -> controller.resetGame());  //Action on new Game
 
 		MenuItem resetGame = new MenuItem("Reset game");
 
-		resetGame.setOnAction(event -> resetGame());//Action on reset button
+		resetGame.setOnAction(event -> controller.resetGame());//Action on reset button
 
 		SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
 		MenuItem exitGame = new MenuItem("Exit game");
@@ -103,10 +103,6 @@ public class Main extends Application {
 	private void exitGame() {
 		Platform.exit();//shuttdown the application
 		System.exit(0); //close all the resources such as thread of this application
-	}
-
-	private void resetGame() {
-		//TODO
 	}
 
 	public static void main(String[] args) {
