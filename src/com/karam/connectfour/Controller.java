@@ -99,9 +99,9 @@ public class Controller implements Initializable {
 	private void insertDisc(Disc disc,int column){
 
 		int row=ROWS-1;
-		while (row>0){
+		while (row >= 0){
 
-			if (insertedDiscsArray[row][column]==null)
+			if (getDiscIfPresent(row,column)==null)
 				break;
 			row--;
 		}
@@ -143,10 +143,60 @@ public class Controller implements Initializable {
 		List<Point2D> horizontalPoints=IntStream.rangeClosed(column-3,column+3)
 				.mapToObj(col-> new Point2D(row,col))
 				.collect(Collectors.toList());
-		return false;
+
+		Point2D startPoint1 =new Point2D(row-3,column+3);
+		List<Point2D> digonal1Point=    IntStream.rangeClosed(0,6)
+										.mapToObj(i-> startPoint1.add(i,-i))
+										.collect(Collectors.toList());
+
+		Point2D startPoint2 =new Point2D(row-3,column-3);
+		List<Point2D> digonal2Point=    IntStream.rangeClosed(0,6)
+										.mapToObj(i-> startPoint2.add(i,i))
+										.collect(Collectors.toList());
+
+
+		boolean isEnded=checkCombination(verticalPointes) || checkCombination(horizontalPoints)
+				                                          || checkCombination(digonal1Point)
+				                                          || checkCombination(digonal2Point);
+
+		return isEnded;
+	}
+
+	private boolean checkCombination(List<Point2D> points) {
+		int chain = 0;
+
+		for (Point2D point: points) {
+
+			int rowIndexForArray = (int) point.getX();
+			int columnIndexForArray = (int) point.getY();
+
+			Disc disc = getDiscIfPresent(rowIndexForArray, columnIndexForArray);
+
+			if (disc != null && disc.isPlayerOneMove == isPlayerOneTurn) {  // if the last inserted Disc belongs to the current player
+
+				chain++;
+				if (chain == 4) {
+					return true;
+				}
+			} else {
+				chain = 0;
+			}
+		}
+
+		return false;//as we havent got the combination
+	}
+
+	public Disc getDiscIfPresent(int row,int column){  //To prevent ArrayIndexUutOfBoundIndex exception
+		if (row >= ROWS || row < 0 || column >= COLUMNS || column < 0)  // If row or column index is invalid
+			return null;
+
+		return insertedDiscsArray[row][column];//return elemnt at this position within our array
 	}
 
 	private void gameOver(){
+
+		String winner = isPlayerOneTurn ? PLAYER_ONE : PLAYER_TWO;
+		System.out.println("Winner is: " + winner);
 
 	}
 
@@ -155,6 +205,7 @@ public class Controller implements Initializable {
 		private final boolean isPlayerOneMove;
 		public Disc(boolean isPlayerOneMove){
 			this.isPlayerOneMove=isPlayerOneMove;
+
 			setRadius(CIRCLE_DIAMETER/2);
 			setFill(isPlayerOneMove? Color.valueOf(discColor1) : Color.valueOf(discColor2));
 			setCenterX(CIRCLE_DIAMETER/2);
