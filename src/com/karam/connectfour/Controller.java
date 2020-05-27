@@ -37,6 +37,8 @@ public class Controller implements Initializable {
 	
 	private Disc[][] insertedDiscsArray=new Disc[ROWS][COLUMNS];//For structural changes
 
+	private boolean isAllowedToInsert=true;
+
 	@FXML
 	public GridPane rootGridPane;
 
@@ -104,8 +106,10 @@ public class Controller implements Initializable {
 
 			final int column=col;//because of lambda expression
 			rectangle.setOnMouseClicked(event -> {
-
-				insertDisc(new Disc(isPlayerOneTurn),column);
+				if (isAllowedToInsert) {
+					isAllowedToInsert=false;
+					insertDisc(new Disc(isPlayerOneTurn), column);
+				}
 			});
 			rectangleList.add(rectangle);
 		}
@@ -131,8 +135,9 @@ public class Controller implements Initializable {
 		int currRow=row;
 		TranslateTransition translateTransition=new TranslateTransition(Duration.seconds(0.4),disc);
 		translateTransition.setToY(row*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
-		translateTransition.setOnFinished(event -> {
 
+		translateTransition.setOnFinished(event -> {
+			isAllowedToInsert=true;
 			if(gameEnded(currRow,column)){
 
 				gameOver();
