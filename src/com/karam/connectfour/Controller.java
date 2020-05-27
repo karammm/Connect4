@@ -5,9 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -48,7 +46,14 @@ public class Controller implements Initializable {
 	@FXML
 	public Label playerNameLabel;
 
+	@FXML
+	public TextField playerOneTextField,playerTwoTextField;
+
+	@FXML
+	public Button setNamesButton;
+
 	public void createPlayground(){
+		Platform.runLater(() -> setNamesButton.requestFocus());
 
 		Shape rectangleWithHoles=createGameStructureGrid();
 		//now place this rectangle on pane
@@ -57,6 +62,12 @@ public class Controller implements Initializable {
 		for (Rectangle rectangle:rectangleList){
 			rootGridPane.add(rectangle,0,1);
 		}
+
+		setNamesButton.setOnAction(event -> {
+			PLAYER_ONE=playerOneTextField.getText();
+			PLAYER_TWO=playerTwoTextField.getText();
+			playerNameLabel.setText(isPlayerOneTurn? PLAYER_ONE : PLAYER_TWO);
+		});
 
 	}
 
