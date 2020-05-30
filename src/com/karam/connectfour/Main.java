@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -30,7 +31,8 @@ public class Main extends Application {
 
 
 		Scene scene = new Scene(rootGridPane);
-
+		Image image=new Image(getClass().getResourceAsStream("Icon/logo.png"));
+		primaryStage.getIcons().add(image);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Connect Four");
 		primaryStage.setResizable(false);
