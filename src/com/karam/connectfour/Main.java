@@ -32,7 +32,8 @@ public class Main extends Application {
 
 		Scene scene = new Scene(rootGridPane);
 		Image image=new Image(getClass().getResourceAsStream("Icon/logo.png"));
-		primaryStage.getIcons().add(image);
+		primaryStage.getIcons().add(image);//Icon
+
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Connect Four");
 		primaryStage.setResizable(false);
