@@ -58,8 +58,9 @@ public class Controller implements Initializable {
 		Platform.runLater(() -> setNamesButton.requestFocus());
 
 		Shape rectangleWithHoles=createGameStructureGrid();
-		//now place this rectangle on pane
+		//now place this rectangle on pane which is rootgridpane
 		rootGridPane.add(rectangleWithHoles,0,1);
+
 		List<Rectangle> rectangleList=createClickableColumns();
 		for (Rectangle rectangle:rectangleList){
 			rootGridPane.add(rectangle,0,1);
@@ -107,7 +108,7 @@ public class Controller implements Initializable {
 			final int column=col;//because of lambda expression
 			rectangle.setOnMouseClicked(event -> {
 				if (isAllowedToInsert) {
-					isAllowedToInsert=false;
+					isAllowedToInsert=false;//To avoid multiple disc fall at a time
 					insertDisc(new Disc(isPlayerOneTurn), column);
 				}
 			});
@@ -116,6 +117,7 @@ public class Controller implements Initializable {
 
 		return rectangleList;
 	}
+
 	private void insertDisc(Disc disc,int column){
 
 		int row=ROWS-1;
@@ -128,25 +130,29 @@ public class Controller implements Initializable {
 		if (row<0)  //If it is full,we cannot insert anymore disc
 			return;
 
-		insertedDiscsArray[row][column]=disc;  //For Structural changes for developers
-		insertedDiscPane.getChildren().add(disc);
+		insertedDiscsArray[row][column]=disc;  //For Structural changes for  developers
+		
+		insertedDiscPane.getChildren().add(disc);//For visual changes
+
 		disc.setTranslateX(column*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 
 		int currRow=row;
 		TranslateTransition translateTransition=new TranslateTransition(Duration.seconds(0.4),disc);
 		translateTransition.setToY(row*(CIRCLE_DIAMETER+5)+CIRCLE_DIAMETER/4);
 
+		//Now need to toggle between the player
 		translateTransition.setOnFinished(event -> {
-			isAllowedToInsert=true;
+			 isAllowedToInsert=true;
 			if(gameEnded(currRow,column)){
 
 				gameOver();
 				return;//no further check if one player wins the game
 			}
 
-			isPlayerOneTurn =! isPlayerOneTurn;
+			isPlayerOneTurn =! isPlayerOneTurn;//Player one turn become player two turn
 			playerNameLabel.setText(isPlayerOneTurn? PLAYER_ONE : PLAYER_TWO);
 		});
+
 		translateTransition.play();
 	}
 
@@ -154,8 +160,8 @@ public class Controller implements Initializable {
 
 		//Vertical Points
 		//A small example: player has inserted his last disc at row=2 , column=3
-
-		//index of each element present in column [row][column]:
+		//
+		//index of each element present in column [row][column]:  0,3   1,3   2,3   3,3   4,3   5,3-->Poind2D
 		//notice same column of 3.
 
 		List<Point2D> verticalPointes=IntStream.rangeClosed(row-3,row+3)  //range of row values= 0,1,2,3,4,5
@@ -192,10 +198,11 @@ public class Controller implements Initializable {
 			int rowIndexForArray = (int) point.getX();
 			int columnIndexForArray = (int) point.getY();
 
+			//getting disc at particular row and column
 			Disc disc = getDiscIfPresent(rowIndexForArray, columnIndexForArray);
 
-			if (disc != null && disc.isPlayerOneMove == isPlayerOneTurn) {  // if the last inserted Disc belongs to the current player
-
+			if (disc != null && disc.isPlayerOneMove == isPlayerOneTurn) {
+				// if the last inserted Disc belongs to the current player
 				chain++;
 				if (chain == 4) {
 					return true;

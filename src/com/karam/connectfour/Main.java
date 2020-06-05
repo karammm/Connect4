@@ -27,6 +27,7 @@ public class Main extends Application {
 		menuBar.prefWidthProperty().bind(primaryStage.widthProperty());//Binding to entire width
 
 		Pane menuPane = (Pane) rootGridPane.getChildren().get(0);//get the 0th index which is a pane for menue bar
+
 		menuPane.getChildren().add(menuBar);//Inserting menu bar in menuPane
 
 
