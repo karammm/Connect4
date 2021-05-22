@@ -4,6 +4,9 @@ Connect-Four is a tic-tac-toe-like two-player game in which players alternately 
 
 Any of the two player if makes the combination of four continous rows or coloumns either vertically horizontally or digonally the player WINS.
 
+## Directly Download the game application 
+- Click on <a href="https://drive.google.com/file/d/1JaZQ2S4WJ7jRmd8cpQMS_kG-y3QImXMf/view?usp=sharing">Download</a>⬇️🕹️
+
 ## Screenshot Of Application
 1. Dashboard of game
 
