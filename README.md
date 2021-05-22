@@ -7,3 +7,11 @@ Connect-Four is a tic-tac-toe-like two-player game in which players alternately 
  ![How to install](/Images/1.png)
  
  ![How to install](/Images/2.png)
+ 
+ ![How to install](/Images/3.png)
+  
+ ![How to install](/Images/4.png)
+
+ ![How to install](/Images/5.png)
+ 
+ ![How to install](/Images/6.png)
